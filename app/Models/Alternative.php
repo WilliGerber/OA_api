@@ -7,8 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alternative extends Model
 {
-    use HasFactory;
     protected $table = 'oa_alternatives';
-    protected $primaryKey = 'id_alternative';
-    public $timestamps = false;
+
+    protected $fillable = [
+        'question_id',
+        'option',
+        'alternative_text',
+    ];
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class, 'question_id');
+    }
 }

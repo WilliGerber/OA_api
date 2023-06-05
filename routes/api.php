@@ -6,6 +6,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AlternativeController;
+use App\Http\Controllers\LearnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::post('/questions', [QuestionController::class, 'save']);
 Route::get('/questions/{id}', [QuestionController::class, 'show']);
 Route::put('/questions/{id}', [QuestionController::class, 'update']);
 Route::delete('/questions/{id}', [QuestionController::class, 'destroy']);
+Route::get('questions/filter/{subjectId}', [QuestionController::class, 'getQuestionsBySubjectId']);
+Route::get('/questions/{questionId}/alternatives', [QuestionController::class, 'getQuestionAlternatives']);
+
 
 // Rotas para as alternativas
 Route::get('/alternatives', [AlternativeController::class, 'index']);
@@ -38,6 +42,15 @@ Route::post('/alternatives', [AlternativeController::class, 'save']);
 Route::get('/alternatives/{id}', [AlternativeController::class, 'show']);
 Route::put('/alternatives/{id}', [AlternativeController::class, 'update']);
 Route::delete('/alternatives/{id}', [AlternativeController::class, 'destroy']);
+
+// Rotas para o aprendizado
+Route::get('/learn', [LearnController::class, 'index']);
+Route::post('/learn', [LearnController::class, 'save']);
+Route::get('/learn/{id}', [LearnController::class, 'show']);
+Route::put('/learn/{id}', [LearnController::class, 'update']);
+Route::delete('/learn/{id}', [LearnController::class, 'destroy']);
+Route::get('learn/filter/{subjectId}', [LearnController::class, 'filterBySubjectId']);
+Route::get('learnByLevelAndSubject/{levelId}/{subjectId}', [LearnController::class, 'getContentByLevelAndSubject']);
 
 //Rotas para levels
 Route::get('/level', [LevelController::class, 'index']);

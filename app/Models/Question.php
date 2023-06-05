@@ -16,6 +16,6 @@ class Question extends Model
     // Relacionamento com as alternativas
     public function alternatives()
     {
-        return $this->belongsToMany(Alternative::class, 'questions_alternatives', 'question_id', 'alternative_id');
+        return $this->hasMany(Alternative::class, 'question_id');
     }
 }

@@ -13,8 +13,10 @@ class CreateOaAlternativesTable extends Migration
             $table->string('option', 5);
             $table->string('text', 700)->nullable();
             $table->tinyInteger('isCorrect')->nullable();
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('question_id')->references('id_question')->on('oa_questions');
             $table->timestamps();
-        });
+        });;
     }
 
     public function down()

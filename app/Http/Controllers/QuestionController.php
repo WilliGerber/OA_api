@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\Alternative;
 
 class QuestionController extends Controller
 {
@@ -62,5 +63,32 @@ class QuestionController extends Controller
         $question->delete();
 
         return response()->json(['message' => 'Question deleted']);
+    }
+
+    // public function filterBySubjectId($subjectId)
+    // {
+    //     $questions = Question::where('subject_id', $subjectId)->get();
+    //     return response()->json($questions);
+    // }
+
+    public function getQuestionsBySubjectId($subjectId)
+    {
+        $questions = Question::with('alternatives')->where('subject_id', $subjectId)->get();
+        return response()->json($questions);
+    }
+
+    public function getQuestionAlternatives($questionId)
+    {
+        $question = Question::find($questionId);
+
+        if (!$question) {
+            return response()->json(['message' => 'Question not found'], 404);
+        }
+
+        $alternatives = Alternative::where('question_id', $questionId)->get();
+
+        $question->alternatives = $alternatives;
+
+        return response()->json($question);
     }
 }
